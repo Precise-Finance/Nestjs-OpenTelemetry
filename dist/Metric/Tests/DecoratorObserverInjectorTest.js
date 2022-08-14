@@ -15,11 +15,11 @@ const common_1 = require("@nestjs/common");
 const core_1 = require("@opentelemetry/core");
 const wait_for_expect_1 = require("wait-for-expect");
 const Observer_1 = require("../Decorators/Observer");
+const jest_mock_extended_1 = require("jest-mock-extended");
 describe('Decorator Observer Injector Test', () => {
     const exporter = jest.fn();
     const sdkModule = OpenTelemetryModule_1.OpenTelemetryModule.forRoot({
-        metricExporter: { export: exporter, shutdown: jest.fn() },
-        metricInterval: 10,
+        metricReader: (0, jest_mock_extended_1.mockDeep)(),
         sampler: new core_1.AlwaysOnSampler(),
     });
     beforeEach(() => {
@@ -28,7 +28,8 @@ describe('Decorator Observer Injector Test', () => {
     });
     it(`should observe decorated provider method`, async () => {
         let HelloService = class HelloService {
-            hi() { }
+            hi() {
+            }
         };
         __decorate([
             (0, Observer_1.Observer)(),

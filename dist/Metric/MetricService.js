@@ -25,9 +25,16 @@ let MetricService = class MetricService {
         this.sdkConfig = sdkConfig;
         this.nodeSDK = nodeSDK;
         this.meterProvider = new sdk_metrics_base_1.MeterProvider({
-            exporter: sdkConfig.metricExporter,
-            interval: sdkConfig.metricInterval,
+            views: [
+                new sdk_metrics_base_1.View({
+                    aggregation: new sdk_metrics_base_1.ExplicitBucketHistogramAggregation([
+                        0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10,
+                    ]),
+                    instrumentType: sdk_metrics_base_1.InstrumentType.HISTOGRAM,
+                }),
+            ],
         });
+        this.meterProvider.addMetricReader(sdkConfig.metricReader);
     }
     getMeter() {
         return this.meterProvider.getMeter('default');

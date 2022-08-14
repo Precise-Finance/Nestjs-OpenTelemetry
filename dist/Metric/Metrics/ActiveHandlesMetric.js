@@ -29,7 +29,8 @@ let ActiveHandlesMetric = class ActiveHandlesMetric {
             .getMeter('default')
             .createObservableGauge(this.name, {
             description: this.description,
-        }, (observerResult) => this.observerCallback(observerResult));
+        });
+        this.observableGauge.addCallback((observerResult) => this.observerCallback(observerResult));
     }
     observerCallback(observerResult) {
         const handles = process._getActiveHandles();

@@ -46,7 +46,8 @@ let ProcessMaxFdsMetric = class ProcessMaxFdsMetric {
             .getMeter('default')
             .createObservableGauge(this.name, {
             description: this.description,
-        }, (observerResult) => this.observerCallback(observerResult));
+        });
+        this.observableBase.addCallback((observerResult) => this.observerCallback(observerResult));
     }
     observerCallback(observerResult) {
         observerResult.observe(this.maxFds, this.metricService.getLabels());

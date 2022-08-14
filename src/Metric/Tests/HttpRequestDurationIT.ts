@@ -5,13 +5,14 @@ import { HttpRequestDurationSeconds } from '../Metrics/Http/HttpRequestDurationS
 import { AlwaysOnSampler } from '@opentelemetry/core';
 import waitForExpect from 'wait-for-expect';
 import * as request from 'supertest';
+import { mockDeep } from 'jest-mock-extended';
+import { MetricReader } from '@opentelemetry/sdk-metrics-base';
 
 describe('Metric Http Test', () => {
   const exporter = jest.fn();
   const sdkModule = OpenTelemetryModule.forRoot({
     metricAutoObservers: [HttpRequestDurationSeconds],
-    metricExporter: { export: exporter, shutdown: jest.fn() },
-    metricInterval: 100,
+    metricReader: mockDeep<MetricReader>(),
     sampler: new AlwaysOnSampler(),
   });
 
@@ -25,7 +26,9 @@ describe('Metric Http Test', () => {
     @Controller('hello')
     class HelloController {
       @Get()
-      hi() {}
+      hi() {
+        // noop
+      }
     }
     const context = await Test.createTestingModule({
       imports: [sdkModule],

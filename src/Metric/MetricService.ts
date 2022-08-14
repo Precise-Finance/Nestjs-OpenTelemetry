@@ -2,7 +2,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Constants } from '../Constants';
 import { OpenTelemetryModuleConfig } from '../OpenTelemetryModuleConfig';
 import { NodeSDK } from '@opentelemetry/sdk-node';
-import { Meter, MeterProvider } from '@opentelemetry/sdk-metrics-base';
+import {
+  ExplicitBucketHistogramAggregation,
+  InstrumentType,
+  MeterProvider,
+  View,
+} from '@opentelemetry/sdk-metrics-base';
+import * as metrics from '@opentelemetry/api-metrics';
 
 @Injectable()
 export class MetricService {
@@ -14,13 +20,19 @@ export class MetricService {
     @Inject(Constants.SDK) private readonly nodeSDK: NodeSDK,
   ) {
     this.meterProvider = new MeterProvider({
-      // @ts-ignore
-      exporter: sdkConfig.metricExporter,
-      interval: sdkConfig.metricInterval,
+      views: [
+        new View({
+          aggregation: new ExplicitBucketHistogramAggregation([
+            0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10,
+          ]),
+          instrumentType: InstrumentType.HISTOGRAM,
+        }),
+      ],
     });
+    this.meterProvider.addMetricReader(sdkConfig.metricReader);
   }
 
-  public getMeter(): Meter {
+  public getMeter(): metrics.Meter {
     return this.meterProvider.getMeter('default');
   }
 

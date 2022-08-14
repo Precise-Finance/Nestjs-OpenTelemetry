@@ -4,12 +4,13 @@ import { Injectable } from '@nestjs/common';
 import { AlwaysOnSampler } from '@opentelemetry/core';
 import { Counter } from '../Decorators/Counter';
 import waitForExpect from 'wait-for-expect';
+import { mockDeep } from 'jest-mock-extended';
+import { MetricReader } from '@opentelemetry/sdk-metrics-base';
 
 describe('Decorator Counter Injector Test', () => {
   const exporter = jest.fn();
   const sdkModule = OpenTelemetryModule.forRoot({
-    metricExporter: { export: exporter, shutdown: jest.fn() },
-    metricInterval: 10,
+    metricReader: mockDeep<MetricReader>(),
     sampler: new AlwaysOnSampler(),
   });
 
@@ -23,7 +24,9 @@ describe('Decorator Counter Injector Test', () => {
     @Injectable()
     class HelloService {
       @Counter()
-      hi() {}
+      hi() {
+        // noop
+      }
     }
     const context = await Test.createTestingModule({
       imports: [sdkModule],

@@ -8,5 +8,4 @@ export declare class ProcessStartTimeMetric implements BaseMetric {
     private readonly uptimeInSecond;
     constructor(metricService: MetricService);
     inject(): Promise<void>;
-    private observerCallback;
 }

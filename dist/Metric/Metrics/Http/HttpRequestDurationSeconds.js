@@ -19,7 +19,6 @@ const ProducerEvent_1 = require("../../Interceptors/ProducerEvent");
 let HttpRequestDurationSeconds = HttpRequestDurationSeconds_1 = class HttpRequestDurationSeconds {
     metricService;
     static metricOptions = {
-        boundaries: [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10],
         valueType: api_metrics_1.ValueType.DOUBLE,
     };
     name = 'http_request_duration_seconds';

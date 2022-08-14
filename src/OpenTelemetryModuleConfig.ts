@@ -25,7 +25,8 @@ import { CompositePropagator } from '@opentelemetry/core';
 import { JaegerPropagator } from '@opentelemetry/propagator-jaeger';
 import { B3InjectEncoding, B3Propagator } from '@opentelemetry/propagator-b3';
 
-export interface OpenTelemetryModuleConfig extends Partial<NodeSDKConfiguration> {
+export interface OpenTelemetryModuleConfig
+  extends Partial<NodeSDKConfiguration> {
   applicationName?: string;
   traceAutoInjectors?: Provider<Injector>[];
   metricAutoObservers?: Provider<BaseMetric>[];

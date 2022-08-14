@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProcessStartTimeMetric = void 0;
 const MetricService_1 = require("../MetricService");
 const common_1 = require("@nestjs/common");
-const api_metrics_1 = require("@opentelemetry/api-metrics");
 let ProcessStartTimeMetric = class ProcessStartTimeMetric {
     metricService;
     name = 'process_start_time_seconds';
@@ -28,11 +27,10 @@ let ProcessStartTimeMetric = class ProcessStartTimeMetric {
             .getMeter('default')
             .createObservableGauge(this.name, {
             description: this.description,
-            aggregationTemporality: api_metrics_1.AggregationTemporality.AGGREGATION_TEMPORALITY_DELTA,
-        }, (observerResult) => this.observerCallback(observerResult));
-    }
-    observerCallback(observerResult) {
-        observerResult.observe(this.uptimeInSecond, this.metricService.getLabels());
+        });
+        this.observableGauge.addCallback((observerResult) => {
+            observerResult.observe(this.uptimeInSecond, this.metricService.getLabels());
+        });
     }
 };
 ProcessStartTimeMetric = __decorate([

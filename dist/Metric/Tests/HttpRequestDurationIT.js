@@ -16,12 +16,12 @@ const HttpRequestDurationSeconds_1 = require("../Metrics/Http/HttpRequestDuratio
 const core_1 = require("@opentelemetry/core");
 const wait_for_expect_1 = require("wait-for-expect");
 const request = require("supertest");
+const jest_mock_extended_1 = require("jest-mock-extended");
 describe('Metric Http Test', () => {
     const exporter = jest.fn();
     const sdkModule = OpenTelemetryModule_1.OpenTelemetryModule.forRoot({
         metricAutoObservers: [HttpRequestDurationSeconds_1.HttpRequestDurationSeconds],
-        metricExporter: { export: exporter, shutdown: jest.fn() },
-        metricInterval: 100,
+        metricReader: (0, jest_mock_extended_1.mockDeep)(),
         sampler: new core_1.AlwaysOnSampler(),
     });
     beforeEach(() => {
@@ -30,7 +30,8 @@ describe('Metric Http Test', () => {
     });
     it(`should generate http metric`, async () => {
         let HelloController = class HelloController {
-            hi() { }
+            hi() {
+            }
         };
         __decorate([
             (0, common_1.Get)(),
