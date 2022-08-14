@@ -1,6 +1,14 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var OpenTelemetryModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpenTelemetryModule = void 0;
+const common_1 = require("@nestjs/common");
 const sdk_node_1 = require("@opentelemetry/sdk-node");
 const TraceService_1 = require("./Trace/TraceService");
 const Constants_1 = require("./Constants");
@@ -19,7 +27,7 @@ const DecoratorObserverMetricInjector_1 = require("./Metric/Injectors/DecoratorO
 const DecoratorCounterMetricInjector_1 = require("./Metric/Injectors/DecoratorCounterMetricInjector");
 const sdk_metrics_base_1 = require("@opentelemetry/sdk-metrics-base");
 const sdk_trace_base_1 = require("@opentelemetry/sdk-trace-base");
-class OpenTelemetryModule {
+let OpenTelemetryModule = OpenTelemetryModule_1 = class OpenTelemetryModule {
     configure(consumer) {
         consumer.apply(MetricHttpMiddleware_1.MetricHttpMiddleware).forRoutes('*');
     }
@@ -29,7 +37,7 @@ class OpenTelemetryModule {
         const metrics = configuration?.metricAutoObservers ?? [];
         return {
             global: true,
-            module: OpenTelemetryModule,
+            module: OpenTelemetryModule_1,
             imports: [event_emitter_1.EventEmitterModule.forRoot()],
             providers: [
                 ...injectors,
@@ -93,7 +101,7 @@ class OpenTelemetryModule {
     static async forRootAsync(configuration = {}) {
         return {
             global: true,
-            module: OpenTelemetryModule,
+            module: OpenTelemetryModule_1,
             imports: [...configuration?.imports, event_emitter_1.EventEmitterModule.forRoot()],
             providers: [
                 TraceService_1.TraceService,
@@ -176,6 +184,9 @@ class OpenTelemetryModule {
             inject: [TraceService_1.TraceService],
         };
     }
-}
+};
+OpenTelemetryModule = OpenTelemetryModule_1 = __decorate([
+    (0, common_1.Global)()
+], OpenTelemetryModule);
 exports.OpenTelemetryModule = OpenTelemetryModule;
 //# sourceMappingURL=OpenTelemetryModule.js.map

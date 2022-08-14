@@ -1,4 +1,9 @@
-import { DynamicModule, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import {
+  DynamicModule,
+  Global,
+  MiddlewareConsumer,
+  NestModule,
+} from '@nestjs/common';
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { TraceService } from './Trace/TraceService';
 import { Constants } from './Constants';
@@ -23,6 +28,7 @@ import { DecoratorCounterMetricInjector } from './Metric/Injectors/DecoratorCoun
 import { Meter } from '@opentelemetry/sdk-metrics-base';
 import { Tracer } from '@opentelemetry/sdk-trace-base';
 
+@Global()
 export class OpenTelemetryModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(MetricHttpMiddleware).forRoutes('*');

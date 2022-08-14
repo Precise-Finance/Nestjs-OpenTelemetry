@@ -19,18 +19,25 @@ export class MetricService {
     private readonly sdkConfig: OpenTelemetryModuleConfig,
     @Inject(Constants.SDK) private readonly nodeSDK: NodeSDK,
   ) {
-    this.meterProvider = new MeterProvider({
-      views: [
-        new View({
-          aggregation: new ExplicitBucketHistogramAggregation([
-            0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10,
-          ]),
-          instrumentType: InstrumentType.HISTOGRAM,
-        }),
-      ],
-    });
-    if (sdkConfig.metricReader) {
-      this.meterProvider.addMetricReader(sdkConfig.metricReader);
+    console.log('MetricService constructor');
+    if (!this.meterProvider) {
+      this.meterProvider = new MeterProvider({
+        views: [
+          new View({
+            aggregation: new ExplicitBucketHistogramAggregation([
+              0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10,
+            ]),
+            instrumentType: InstrumentType.HISTOGRAM,
+          }),
+        ],
+      });
+      if (sdkConfig.metricReader) {
+        try {
+          this.meterProvider.addMetricReader(sdkConfig.metricReader);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
   }
 

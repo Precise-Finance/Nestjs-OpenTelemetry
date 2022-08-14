@@ -1,6 +1,6 @@
 {
   "name": "@precise/nestjs-opentelemetry",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "deeply integrated OpenTelemetry module for Nestjs",
   "author": "metinsyln@gmail.com",
   "license": "MIT",
@@ -46,7 +46,7 @@
     "@nestjs/schedule": "^1.0.2",
     "@opentelemetry/api": "^1.1.0",
     "@opentelemetry/api-metrics": "^0.31.0",
-    "@opentelemetry/context-async-hooks": "^1.0.1",
+    "@opentelemetry/context-async-hooks": "^1.5.0",
     "@opentelemetry/core": "^1.5.0",
     "@opentelemetry/host-metrics": "^0.29.0",
     "@opentelemetry/instrumentation-http": "^0.31.0",
