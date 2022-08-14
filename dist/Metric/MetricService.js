@@ -34,7 +34,9 @@ let MetricService = class MetricService {
                 }),
             ],
         });
-        this.meterProvider.addMetricReader(sdkConfig.metricReader);
+        if (sdkConfig.metricReader) {
+            this.meterProvider.addMetricReader(sdkConfig.metricReader);
+        }
     }
     getMeter() {
         return this.meterProvider.getMeter('default');

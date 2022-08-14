@@ -29,7 +29,9 @@ export class MetricService {
         }),
       ],
     });
-    this.meterProvider.addMetricReader(sdkConfig.metricReader);
+    if (sdkConfig.metricReader) {
+      this.meterProvider.addMetricReader(sdkConfig.metricReader);
+    }
   }
 
   public getMeter(): metrics.Meter {

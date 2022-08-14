@@ -47,7 +47,7 @@ exports.OpenTelemetryModuleDefaultConfig = {
     autoDetectResources: true,
     contextManager: new context_async_hooks_1.AsyncLocalStorageContextManager(),
     resource: new resources_1.Resource({
-        lib: '@metinseylan/nestjs-opentelemetry',
+        lib: '@precise/nestjs-opentelemetry',
     }),
     instrumentations: [new instrumentation_http_1.HttpInstrumentation()],
     spanProcessor: new sdk_trace_base_1.NoopSpanProcessor(),
