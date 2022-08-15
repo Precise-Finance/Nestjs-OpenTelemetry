@@ -16,7 +16,7 @@ exports.MetricService = void 0;
 const common_1 = require("@nestjs/common");
 const Constants_1 = require("../Constants");
 const sdk_node_1 = require("@opentelemetry/sdk-node");
-const sdk_metrics_base_1 = require("@opentelemetry/sdk-metrics-base");
+const api = require("@opentelemetry/api-metrics");
 let MetricService = class MetricService {
     sdkConfig;
     nodeSDK;
@@ -24,27 +24,7 @@ let MetricService = class MetricService {
     constructor(sdkConfig, nodeSDK) {
         this.sdkConfig = sdkConfig;
         this.nodeSDK = nodeSDK;
-        console.log('MetricService constructor');
-        if (!this.meterProvider) {
-            this.meterProvider = new sdk_metrics_base_1.MeterProvider({
-                views: [
-                    new sdk_metrics_base_1.View({
-                        aggregation: new sdk_metrics_base_1.ExplicitBucketHistogramAggregation([
-                            0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10,
-                        ]),
-                        instrumentType: sdk_metrics_base_1.InstrumentType.HISTOGRAM,
-                    }),
-                ],
-            });
-            if (sdkConfig.metricReader) {
-                try {
-                    this.meterProvider.addMetricReader(sdkConfig.metricReader);
-                }
-                catch (error) {
-                    console.log(error);
-                }
-            }
-        }
+        this.meterProvider = api.metrics.getMeterProvider();
     }
     getMeter() {
         return this.meterProvider.getMeter('default');

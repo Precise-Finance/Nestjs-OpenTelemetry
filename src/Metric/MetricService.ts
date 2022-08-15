@@ -2,50 +2,51 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Constants } from '../Constants';
 import { OpenTelemetryModuleConfig } from '../OpenTelemetryModuleConfig';
 import { NodeSDK } from '@opentelemetry/sdk-node';
-import {
-  ExplicitBucketHistogramAggregation,
-  InstrumentType,
-  MeterProvider,
-  View,
-} from '@opentelemetry/sdk-metrics-base';
-import * as metrics from '@opentelemetry/api-metrics';
+// import {
+//   ExplicitBucketHistogramAggregation,
+//   InstrumentType,
+//   MeterProvider,
+//   View,
+// } from '@opentelemetry/sdk-metrics-base';
+import * as api from '@opentelemetry/api-metrics';
 
 @Injectable()
 export class MetricService {
-  private readonly meterProvider: MeterProvider;
+  private readonly meterProvider: api.MeterProvider;
 
   constructor(
     @Inject(Constants.SDK_CONFIG)
     private readonly sdkConfig: OpenTelemetryModuleConfig,
     @Inject(Constants.SDK) private readonly nodeSDK: NodeSDK,
   ) {
-    console.log('MetricService constructor');
-    if (!this.meterProvider) {
-      this.meterProvider = new MeterProvider({
-        views: [
-          new View({
-            aggregation: new ExplicitBucketHistogramAggregation([
-              0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10,
-            ]),
-            instrumentType: InstrumentType.HISTOGRAM,
-          }),
-        ],
-      });
-      if (sdkConfig.metricReader) {
-        try {
-          this.meterProvider.addMetricReader(sdkConfig.metricReader);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }
+    this.meterProvider = api.metrics.getMeterProvider();
+    // console.log('MetricService constructor');
+    // if (!this.meterProvider) {
+    //   this.meterProvider = new MeterProvider({
+    //     views: [
+    //       new View({
+    //         aggregation: new ExplicitBucketHistogramAggregation([
+    //           0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10,
+    //         ]),
+    //         instrumentType: InstrumentType.HISTOGRAM,
+    //       }),
+    //     ],
+    //   });
+    //   if (sdkConfig.metricReader) {
+    //     try {
+    //       this.meterProvider.addMetricReader(sdkConfig.metricReader);
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    // }
   }
 
-  public getMeter(): metrics.Meter {
+  public getMeter(): api.Meter {
     return this.meterProvider.getMeter('default');
   }
 
-  public getProvider(): MeterProvider {
+  public getProvider(): api.MeterProvider {
     return this.meterProvider;
   }
 
