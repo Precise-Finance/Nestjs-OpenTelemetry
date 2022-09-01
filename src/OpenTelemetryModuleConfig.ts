@@ -19,7 +19,6 @@ import { GrpcRequestDurationSeconds } from './Metric/Metrics/Grpc/GrpcRequestDur
 import { RabbitMqRequestDurationSeconds } from './Metric/Metrics/RabbitMQ/GrpcRequestDurationSeconds';
 import { AsyncLocalStorageContextManager } from '@opentelemetry/context-async-hooks';
 import { Resource } from '@opentelemetry/resources';
-import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { NoopSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { CompositePropagator } from '@opentelemetry/core';
 import { JaegerPropagator } from '@opentelemetry/propagator-jaeger';
@@ -58,7 +57,7 @@ export const OpenTelemetryModuleDefaultConfig = {
   resource: new Resource({
     lib: '@precise/nestjs-opentelemetry',
   }),
-  instrumentations: [new HttpInstrumentation()],
+  instrumentations: [],
   spanProcessor: new NoopSpanProcessor(),
   textMapPropagator: new CompositePropagator({
     propagators: [

@@ -19,7 +19,6 @@ import { GrpcRequestDurationSeconds } from './Metric/Metrics/Grpc/GrpcRequestDur
 import { RabbitMqRequestDurationSeconds } from './Metric/Metrics/RabbitMQ/GrpcRequestDurationSeconds';
 import { AsyncLocalStorageContextManager } from '@opentelemetry/context-async-hooks';
 import { Resource } from '@opentelemetry/resources';
-import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { NoopSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { CompositePropagator } from '@opentelemetry/core';
 export interface OpenTelemetryModuleConfig extends Partial<NodeSDKConfiguration> {
@@ -34,7 +33,7 @@ export declare const OpenTelemetryModuleDefaultConfig: {
     autoDetectResources: boolean;
     contextManager: AsyncLocalStorageContextManager;
     resource: Resource;
-    instrumentations: HttpInstrumentation[];
+    instrumentations: any[];
     spanProcessor: NoopSpanProcessor;
     textMapPropagator: CompositePropagator;
 };

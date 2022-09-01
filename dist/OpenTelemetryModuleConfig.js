@@ -18,7 +18,6 @@ const GrpcRequestDurationSeconds_1 = require("./Metric/Metrics/Grpc/GrpcRequestD
 const GrpcRequestDurationSeconds_2 = require("./Metric/Metrics/RabbitMQ/GrpcRequestDurationSeconds");
 const context_async_hooks_1 = require("@opentelemetry/context-async-hooks");
 const resources_1 = require("@opentelemetry/resources");
-const instrumentation_http_1 = require("@opentelemetry/instrumentation-http");
 const sdk_trace_base_1 = require("@opentelemetry/sdk-trace-base");
 const core_1 = require("@opentelemetry/core");
 const propagator_jaeger_1 = require("@opentelemetry/propagator-jaeger");
@@ -49,7 +48,7 @@ exports.OpenTelemetryModuleDefaultConfig = {
     resource: new resources_1.Resource({
         lib: '@precise/nestjs-opentelemetry',
     }),
-    instrumentations: [new instrumentation_http_1.HttpInstrumentation()],
+    instrumentations: [],
     spanProcessor: new sdk_trace_base_1.NoopSpanProcessor(),
     textMapPropagator: new core_1.CompositePropagator({
         propagators: [
