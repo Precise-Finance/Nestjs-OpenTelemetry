@@ -1,6 +1,6 @@
 {
   "name": "@precise/nestjs-opentelemetry",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "deeply integrated OpenTelemetry module for Nestjs",
   "author": "metinsyln@gmail.com",
   "license": "MIT",

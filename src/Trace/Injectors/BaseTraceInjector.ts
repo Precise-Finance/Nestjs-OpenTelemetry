@@ -13,7 +13,11 @@ export class BaseTraceInjector {
   protected *getControllers(): Generator<InstanceWrapper<Controller>> {
     for (const module of this.modulesContainer.values()) {
       for (const controller of module.controllers.values()) {
-        if (controller && controller.metatype?.prototype) {
+        if (
+          controller &&
+          controller.metatype?.prototype &&
+          controller.name !== 'HealthController'
+        ) {
           yield controller as InstanceWrapper<Controller>;
         }
       }

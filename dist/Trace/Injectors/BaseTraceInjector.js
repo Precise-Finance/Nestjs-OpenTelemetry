@@ -14,7 +14,9 @@ class BaseTraceInjector {
     *getControllers() {
         for (const module of this.modulesContainer.values()) {
             for (const controller of module.controllers.values()) {
-                if (controller && controller.metatype?.prototype) {
+                if (controller &&
+                    controller.metatype?.prototype &&
+                    controller.name !== 'HealthController') {
                     yield controller;
                 }
             }
