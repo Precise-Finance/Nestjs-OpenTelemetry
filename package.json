@@ -1,6 +1,6 @@
 {
   "name": "@precise/nestjs-opentelemetry",
-  "version": "2.0.13",
+  "version": "2.0.14",
   "description": "deeply integrated OpenTelemetry module for Nestjs",
   "author": "metinsyln@gmail.com",
   "license": "MIT",
@@ -61,11 +61,11 @@
     "rxjs": "^7.5.5"
   },
   "peerDependencies": {
-    "@nestjs/common": "^8.2.6",
-    "@nestjs/core": "^8.2.6",
+    "@nestjs/common": "^8.2.6 || ^9.0.0",
+    "@nestjs/core": "^8.2.6 || ^9.0.0",
     "@nestjs/event-emitter": "^1.3.0",
-    "@nestjs/microservices": "^8.2.6",
-    "@nestjs/schedule": "^1.0.2",
+    "@nestjs/microservices": "^8.2.6 || ^9.0.0",
+    "@nestjs/schedule": "^1.0.2 || ^2.0.0",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
